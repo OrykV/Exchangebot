@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 counter = 0
 
+# Functions, which get tickers from exchanges and format them
 def gvrl_get_tickers():
     page_content = requests.get('https://goverla.ua/').content
     soup = BeautifulSoup(page_content,'html.parser')
@@ -76,7 +77,7 @@ gvrl_result = gvrl_get_tickers()
 west_result = west_get_tickers()
 niko_result = niko_get_tickers()
 
-
+# compares bid prices and shows the best bid proposition
 def bid_compare(i):
     if gvrl_result[i] < west_result[i] and niko_result[i] < west_result[i]:
         result = f'West Finance: {west_result[i]}.'
@@ -92,7 +93,7 @@ def bid_compare(i):
         result = f'Niko Lutsk: {niko_result[i]}.\n Goverla: {gvrl_result[i]}'
     return result
 
-
+# compares ask prices and shows the best ask proposition
 def ask_compare(i):
     if gvrl_result[i] > west_result[i] and niko_result[i] > west_result[i]:
         result = f'West finance: {west_result[i]}.'
@@ -108,7 +109,7 @@ def ask_compare(i):
         result = f'Niko Lutsk: {niko_result[i]}.\n Goverla: {gvrl_result[i]}'
     return result
 
-
+# updates all tickers. Counts all requests and write result to the file count.txt
 def startf():
     west_get_tickers()
     niko_get_tickers()
